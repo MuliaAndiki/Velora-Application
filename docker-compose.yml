@@ -4,23 +4,22 @@ services:
   frontend:
     container_name: next-fe
     build:
-      context: ./Velora-Frontpage
+      context: ./frontend
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
-    environment:
-      - NODE_ENV=production
-      - NEXT_PUBLIC_API_URL=http://localhost:5000
+    env_file:
+      - ./fe.env
     depends_on:
       - backend
 
   backend:
     container_name: bun-be
     build:
-      context: ./Velora-Backend
+      context: ./backend
       dockerfile: Dockerfile
     ports:
       - "5000:5000"
-    environment:
-      - PORT=5000
+    env_file:
+      - ./be.env
     command: ["bun", "run", "src/serve.ts"]
